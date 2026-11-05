@@ -1,0 +1,58 @@
+services:
+  rabbitmq:
+    image: rabbitmq:4-management
+    container_name: productmessenger-rabbitmq
+    hostname: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  api:
+    build:
+      context: .
+      dockerfile: ProductMessengerRabbitMQ.API/Dockerfile
+    container_name: productmessenger-api
+    user: "0:0"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: 8080
+      ConnectionStrings__Default: Data Source=/app/data/db.sqlite
+      RabbitMQ__Host: rabbitmq
+      RabbitMQ__User: user
+      RabbitMQ__Password: password
+    ports:
+      - "5070:8080"
+    volumes:
+      - api-data:/app/data
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  worker:
+    build:
+      context: .
+      dockerfile: ProductMessengerRabbitMQ.Worker/Dockerfile
+    container_name: productmessenger-worker
+    environment:
+      DOTNET_ENVIRONMENT: Development
+      RabbitMQ__Host: rabbitmq
+      RabbitMQ__User: user
+      RabbitMQ__Password: password
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+volumes:
+  rabbitmq-data:
+  api-data:

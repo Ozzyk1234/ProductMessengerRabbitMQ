@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-ProductMessengerRabbitMQ.Worker-ec35e969-a397-4f99-aa76-c2a1b1de9f8b</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit.RabbitMQ" Version="8.3.6" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.14" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.24.2-preview.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProductMessengerRabbitMQ.Contracts\ProductMessengerRabbitMQ.Contracts.csproj" />
+  </ItemGroup>
+</Project>

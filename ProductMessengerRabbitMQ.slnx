@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="ProductMessengerRabbitMQ.API/ProductMessengerRabbitMQ.API.csproj" />
+  <Project Path="ProductMessengerRabbitMQ.Contracts/ProductMessengerRabbitMQ.Contracts.csproj" Id="bd228ecf-6c6f-4c63-b952-35aa6c9538bf" />
+  <Project Path="ProductMessengerRabbitMQ.Worker/ProductMessengerRabbitMQ.Worker.csproj" Id="585bf68e-4ec7-4d10-9401-5f0d2c0ec937" />
+</Solution>
